@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from './components/Header';
-import SearchBar from './components/SearchBar';
-import DocumentList from './components/DocumentList';
+import Header from './Components/Header/Header';
+import SearchBar from './Components/SearchBar/SearchBar';
+import DocumentList from './Components/DocumentList/DocumentList';
 import './App.css';
 
 const App = () => {
