@@ -1,7 +1,7 @@
 .document-list {
     padding: 10px;
     overflow-y: auto;
-    height: calc(100vh - 100px); /* Adjust based on header and search bar height */
+    height: calc(100vh - 100px); 
 }
 
 .document-item {

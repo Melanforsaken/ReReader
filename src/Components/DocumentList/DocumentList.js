@@ -6,7 +6,7 @@ const DocumentList = () => {
         { id: 1, title: 'Document 1' },
         { id: 2, title: 'Document 2' },
         { id: 3, title: 'Document 3' },
-        // Add more dummy data as needed
+       
     ];
 
     return (
