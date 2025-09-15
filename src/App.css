@@ -3,3 +3,18 @@
     display: flex;
     flex-direction: column;
 }
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px; /* Space between items */
+  padding: 16px;
+}
+
+.book-item {
+  background-color: #f0f0f0; /* Background color for each book item */
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  padding: 8px;
+}
