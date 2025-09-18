@@ -7,12 +7,12 @@
 .book-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 16px; /* Space between items */
+  gap: 16px; 
   padding: 16px;
 }
 
 .book-item {
-  background-color: #f0f0f0; /* Background color for each book item */
+  background-color: #f0f0f0; 
   border-radius: 8px;
   overflow: hidden;
   text-align: center;
