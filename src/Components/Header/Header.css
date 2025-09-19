@@ -2,8 +2,8 @@
     display: flex;
     justify-content: space-between;
     padding: 10px;
-    background-color: #cccfcc;
-    color: rgb(247, 235, 235);
+    background-color: #c2c4c2;
+    color: rgb(187, 177, 177);
 }
 .logo {
     color: rgb(179, 97, 97);
