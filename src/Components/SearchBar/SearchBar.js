@@ -1,12 +1,7 @@
 import React from 'react';
 import './SearchBar.css';
 
-const SearchBar = () => {
-    const handleFileUpload = (event) => {
-        const files = event.target.files;
-        console.log(files);
-    };
-
+const SearchBar = ({ onFileUpload }) => {
     return (
         <div className="search-container">
             <input type="text" placeholder="Search files..." />
@@ -23,7 +18,7 @@ const SearchBar = () => {
                         id="file-upload"
                         type="file"
                         accept=".epub, .pdf"
-                        onChange={handleFileUpload}
+                        onChange={onFileUpload}
                         style={{ display: 'none' }} 
                     />
                 </label>
