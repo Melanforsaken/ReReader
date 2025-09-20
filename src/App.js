@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Epub from 'epubjs';
 import Header from './Components/Header/Header';
 import SearchBar from './Components/SearchBar/SearchBar';
 import BookGrid from './Components/BookGrid/BookGrid';
@@ -15,11 +16,26 @@ const App = () => {
     const handleFileUpload = (event) => {
         const files = event.target.files;
         const newBooks = Array.from(files).map((file, index) => {
-            const title = file.name; // Set the title as the file name
-            const cover = URL.createObjectURL(file); // Create a URL for the uploaded file (you can modify this)
-            return { id: books.length + index + 1, title, cover }; // Generate new book object
+            const title = file.name;
+
+            // Create a Blob URL for the EPUB file
+            const blobUrl = URL.createObjectURL(file);
+            const epub = Epub(blobUrl);
+
+            // Create a Promise to read the EPUB and extract the cover image
+            return epub.getMetadata().then(metadata => {
+                const cover = metadata.cover; // This gets the cover image filename
+                return epub.getImage(cover).then(image => {
+                    const coverUrl = URL.createObjectURL(image); // Create a URL for the cover image
+                    return { id: books.length + index + 1, title, cover: coverUrl }; // Return new book object
+                });
+            });
         });
-        setBooks([...books, ...newBooks]); // Add new books to the existing state
+
+        // Wait for all promises to resolve
+        Promise.all(newBooks).then(resolvedBooks => {
+            setBooks([...books, ...resolvedBooks]); // Add new books to the existing state
+        });
     };
 
     return (
