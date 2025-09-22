@@ -6,10 +6,7 @@ import BookGrid from './Components/BookGrid/BookGrid';
 import './App.css';
 
 const App = () => {
-    const [books, setBooks] = useState([
-        { id: 1, title: 'Book One', cover: 'link_to_cover_image_1' },
-        { id: 2, title: 'Book Two', cover: 'link_to_cover_image_2' },
-    ]);
+    const [books, setBooks] = useState([]);
 
     const handleFileUpload = (event) => {
         const files = event.target.files;
@@ -20,22 +17,26 @@ const App = () => {
             const blobUrl = URL.createObjectURL(file);
             const epub = Epub(blobUrl);
 
-            return epub.ready.then(() => {
-                return epub.getMetadata().then(metadata => {
-                    const cover = metadata.cover; 
-                    return epub.getImage(cover).then(image => {
-                        const coverUrl = URL.createObjectURL(image); 
-                        return { id: books.length + index + 1, title, cover: coverUrl }; 
-                    });
+            
+            return epub.getMetadata().then(metadata => {
+                const cover = metadata.cover || ''; 
+                return epub.getImage(cover).then(image => {
+                    const coverUrl = URL.createObjectURL(image);
+                    return { id: books.length + index + 1, title, cover: coverUrl };
+                }).catch(error => {
+                    console.error("Error retrieving cover image:", error);
+                    return { id: books.length + index + 1, title, cover: null }; 
                 });
+            }).catch(error => {
+                console.error("Error retrieving metadata:", error);
+                return { id: books.length + index + 1, title, cover: null }; 
             });
         });
 
-        
         Promise.all(newBooks).then(resolvedBooks => {
-            setBooks([...books, ...resolvedBooks]); 
+            setBooks([...books, ...resolvedBooks]);
         }).catch(error => {
-            console.error("Error processing EPUB:", error); 
+            console.error("Error processing EPUB:", error);
         });
     };
 
