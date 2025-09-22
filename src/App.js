@@ -9,32 +9,35 @@ const App = () => {
     const [books, setBooks] = useState([
         { id: 1, title: 'Book One', cover: 'link_to_cover_image_1' },
         { id: 2, title: 'Book Two', cover: 'link_to_cover_image_2' },
-        // ... (other books)
     ]);
 
-    // Function to handle file upload
+  
     const handleFileUpload = (event) => {
         const files = event.target.files;
         const newBooks = Array.from(files).map((file, index) => {
             const title = file.name;
 
-            // Create a Blob URL for the EPUB file
+        
             const blobUrl = URL.createObjectURL(file);
             const epub = Epub(blobUrl);
 
-            // Create a Promise to read the EPUB and extract the cover image
-            return epub.getMetadata().then(metadata => {
-                const cover = metadata.cover; // This gets the cover image filename
-                return epub.getImage(cover).then(image => {
-                    const coverUrl = URL.createObjectURL(image); // Create a URL for the cover image
-                    return { id: books.length + index + 1, title, cover: coverUrl }; // Return new book object
+         
+      return epub.loaded.then(() => {
+                return epub.getMetadata().then(metadata => {
+                    const cover = metadata.cover || ''; 
+                    return epub.getImage(cover).then(image => {
+                        const coverUrl = URL.createObjectURL(image);
+                        return { id: books.length + index + 1, title, cover: coverUrl };
+                    });
                 });
             });
         });
 
-        // Wait for all promises to resolve
-        Promise.all(newBooks).then(resolvedBooks => {
-            setBooks([...books, ...resolvedBooks]); // Add new books to the existing state
+        
+       Promise.all(newBooks).then(resolvedBooks => {
+            setBooks([...books, ...resolvedBooks]);
+        }).catch(error => {
+            console.error("Error processing EPUB:", error);
         });
     };
 
