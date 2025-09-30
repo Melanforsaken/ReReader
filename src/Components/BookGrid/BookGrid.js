@@ -3,19 +3,13 @@ import BookItem from '../BookItem/BookItem';
 import './BookGrid.css';
 
 const BookGrid = ({ books }) => {
-    return (
-        <div className="book-grid">
-            {books.map(book => (
-                <div key={book.id} className="book-item">
-                    {book.cover ? (
-                        <img src={book.cover} alt={book.title} />
-                    ) : (
-                        <div className="book-title">{book.title}</div>
-                    )}
-                </div>
-            ))}
-        </div>
-    );
+  return (
+    <div className="book-grid">
+      {books.map((book) => (
+        <BookItem key={book.id} title={book.title} cover={book.cover} />
+      ))}
+    </div>
+  );
 };
 
 export default BookGrid;

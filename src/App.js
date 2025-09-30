@@ -6,37 +6,34 @@ import BookGrid from './Components/BookGrid/BookGrid';
 import './App.css';
 
 const App = () => {
-    const [books, setBooks] = useState([]);
+    const [books, setBooks] = useState([
+        { id: 1, title: 'Book One', cover: 'link_to_cover_image_1' },
+        { id: 2, title: 'Book Two', cover: 'link_to_cover_image_2' },
+    ]);
 
+ 
     const handleFileUpload = (event) => {
         const files = event.target.files;
         const newBooks = Array.from(files).map((file, index) => {
             const title = file.name;
 
-            
+           
             const blobUrl = URL.createObjectURL(file);
             const epub = Epub(blobUrl);
 
-            
+          
             return epub.getMetadata().then(metadata => {
-                const cover = metadata.cover || ''; 
+                const cover = metadata.cover; 
                 return epub.getImage(cover).then(image => {
-                    const coverUrl = URL.createObjectURL(image);
-                    return { id: books.length + index + 1, title, cover: coverUrl };
-                }).catch(error => {
-                    console.error("Error retrieving cover image:", error);
-                    return { id: books.length + index + 1, title, cover: null }; 
+                    const coverUrl = URL.createObjectURL(image); 
+                    return { id: books.length + index + 1, title, cover: coverUrl }; 
                 });
-            }).catch(error => {
-                console.error("Error retrieving metadata:", error);
-                return { id: books.length + index + 1, title, cover: null }; 
             });
         });
 
+        // Wait for all promises to resolve
         Promise.all(newBooks).then(resolvedBooks => {
-            setBooks([...books, ...resolvedBooks]);
-        }).catch(error => {
-            console.error("Error processing EPUB:", error);
+            setBooks([...books, ...resolvedBooks]); 
         });
     };
 
