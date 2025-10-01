@@ -12,30 +12,30 @@ const App = () => {
     ]);
 
  
-    const handleFileUpload = (event) => {
-        const files = event.target.files;
-        const newBooks = Array.from(files).map((file, index) => {
-            const title = file.name;
+   const handleFileUpload = (event) => {
+    const files = event.target.files;
+    const newBooks = Array.from(files).map((file, index) => {
+        const title = file.name;
+        const blobUrl = URL.createObjectURL(file);
+        const epub = Epub(blobUrl);
 
-           
-            const blobUrl = URL.createObjectURL(file);
-            const epub = Epub(blobUrl);
-
-          
+        return epub.open().then(() => {
             return epub.getMetadata().then(metadata => {
-                const cover = metadata.cover; 
+                const cover = metadata.cover || metadata['cover-image']; 
                 return epub.getImage(cover).then(image => {
-                    const coverUrl = URL.createObjectURL(image); 
-                    return { id: books.length + index + 1, title, cover: coverUrl }; 
+                    const coverUrl = URL.createObjectURL(image);
+                    return { id: books.length + index + 1, title, cover: coverUrl };
                 });
             });
         });
+    });
 
-        // Wait for all promises to resolve
-        Promise.all(newBooks).then(resolvedBooks => {
-            setBooks([...books, ...resolvedBooks]); 
-        });
-    };
+    Promise.all(newBooks).then(resolvedBooks => {
+        setBooks([...books, ...resolvedBooks]);
+    }).catch(error => {
+        console.error("Error processing EPUB files:", error);
+    });
+};
 
     return (
         <div className="app">
