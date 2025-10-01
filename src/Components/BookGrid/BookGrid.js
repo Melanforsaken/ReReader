@@ -1,17 +1,15 @@
 import React from 'react';
-import './BookItem.css';
+import BookItem from '../BookItem/BookItem';
+import './BookGrid.css';
 
-const BookItem = ({ title, cover }) => {
+const BookGrid = ({ books }) => {
   return (
-    <div className="book-item">
-      {cover ? (
-        <img src={cover} alt={`Cover of ${title}`} className="book-cover" />
-      ) : (
-        <div className="no-cover">No Cover Available</div>
-      )}
-      <h3 className="book-title">{title}</h3>
+    <div className="book-grid">
+      {books.map((book) => (
+        <BookItem key={book.id} title={book.title} cover={book.cover} />
+      ))}
     </div>
   );
 };
 
-export default BookItem;
+export default BookGrid;
