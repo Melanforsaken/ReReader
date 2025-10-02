@@ -11,31 +11,36 @@ const App = () => {
         { id: 2, title: 'Book Two', cover: 'link_to_cover_image_2' },
     ]);
 
- 
-   const handleFileUpload = (event) => {
+   const handleFileUpload = async (event) => {
     const files = event.target.files;
-    const newBooks = Array.from(files).map((file, index) => {
-        const title = file.name;
+
+    const newBooksPromises = Array.from(files).map(async (file, index) => {
+      try {
+
         const blobUrl = URL.createObjectURL(file);
-        const epub = Epub(blobUrl);
+        const epub = new Epub(blobUrl);
+        await epub.open();
+        const metadata = await epub.getMetadata();
 
-        return epub.open().then(() => {
-            return epub.getMetadata().then(metadata => {
-                const cover = metadata.cover || metadata['cover-image']; 
-                return epub.getImage(cover).then(image => {
-                    const coverUrl = URL.createObjectURL(image);
-                    return { id: books.length + index + 1, title, cover: coverUrl };
-                });
-            });
-        });
+        let coverUrl = "";
+
+        if (metadata.cover || metadata["cover-image"]) {
+          const cover = metadata.cover || metadata["cover-image"];
+          const image = await epub.getImage(cover);
+          coverUrl = URL.createObjectURL(image);
+        }
+
+        return { id: books.length + index + 1, title: file.name, cover: coverUrl };
+      } catch (err) {
+        console.error("Fout bij verwerken van EPUB:", err);
+        return { id: books.length + index + 1, title: file.name, cover: "" };
+      }
     });
 
-    Promise.all(newBooks).then(resolvedBooks => {
-        setBooks([...books, ...resolvedBooks]);
-    }).catch(error => {
-        console.error("Error processing EPUB files:", error);
-    });
-};
+    const newBooks = await Promise.all(newBooksPromises);
+
+    setBooks((prevBooks) => [...prevBooks, ...newBooks]);
+  };
 
     return (
         <div className="app">
