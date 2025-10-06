@@ -3,6 +3,7 @@ import Epub from 'epubjs';
 import Header from './Components/Header/Header';
 import SearchBar from './Components/SearchBar/SearchBar';
 import BookGrid from './Components/BookGrid/BookGrid';
+import BookReader from './Components/BookReader/BookReader';
 import './App.css';
 
 const App = () => {
