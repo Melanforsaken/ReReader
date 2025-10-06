@@ -18,8 +18,8 @@ const App = () => {
                 const blobUrl = URL.createObjectURL(file);
                 const epub = new Epub(blobUrl);
                 await epub.open();
-                const metadata = await epub.getMetadata();
 
+                const metadata = await epub.getMetadata();
                 let coverUrl = "";
 
                 if (metadata.cover || metadata["cover-image"]) {
@@ -28,10 +28,21 @@ const App = () => {
                     coverUrl = URL.createObjectURL(image);
                 }
 
-                return { id: books.length + index + 1, title: file.name, cover: coverUrl };
+                // Return the book object with the file included
+                return {
+                    id: books.length + index + 1,
+                    title: metadata.title || file.name,
+                    cover: coverUrl,
+                    file: file // Include the actual file here for BookReader
+                };
             } catch (err) {
                 console.error("Error processing EPUB:", err);
-                return { id: books.length + index + 1, title: file.name, cover: "" };
+                return {
+                    id: books.length + index + 1,
+                    title: file.name,
+                    cover: "",
+                    file: null // Ensure file is null on error
+                };
             }
         });
 
@@ -46,7 +57,7 @@ const App = () => {
     return (
         <div className="app">
             <Header />
-            <SearchBar onFileUpload={handleFileUpload} />
+            <SearchBar onFileUpload={handleFileUpload} books={books} />
             {selectedBook ? (
                 <BookReader book={selectedBook} />
             ) : (

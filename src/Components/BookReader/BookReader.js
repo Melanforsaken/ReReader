@@ -3,9 +3,9 @@ import Epub from 'epubjs';
 
 const BookReader = ({ book }) => {
     const [epub, setEpub] = useState(null);
+    const [content, setContent] = useState('');
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
-    const [content, setContent] = useState('');
 
     useEffect(() => {
         if (book) {
@@ -16,7 +16,7 @@ const BookReader = ({ book }) => {
             newEpub.open().then(() => {
                 newEpub.getDocuments().then((docs) => {
                     setTotalPages(docs.length);
-                    loadPage(0); 
+                    loadPage(0); // Load the first page
                 });
             }).catch(err => {
                 console.error("Failed to open EPUB:", err);
@@ -35,6 +35,7 @@ const BookReader = ({ book }) => {
         }
     };
 
+    // Navigation functions
     const nextPage = () => {
         if (currentPage < totalPages - 1) {
             loadPage(currentPage + 1);
