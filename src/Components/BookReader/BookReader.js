@@ -16,7 +16,7 @@ const BookReader = ({ book }) => {
             newEpub.open().then(() => {
                 newEpub.getDocuments().then((docs) => {
                     setTotalPages(docs.length);
-                    loadPage(0); // Load the first page
+                    loadPage(0); 
                 });
             }).catch(err => {
                 console.error("Failed to open EPUB:", err);
