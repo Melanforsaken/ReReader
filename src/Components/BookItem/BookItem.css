@@ -1,7 +1,21 @@
 .book-item {
-  background-color: #b8a8a8; 
-  border-radius: 8px;
-  overflow: hidden;
-  text-align: center;
-  padding: 8px;
+    background-color: #b8a8a8; 
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    padding: 8px;
+    cursor: pointer; 
+    transition: transform 0.2s; 
+}
+
+.book-item:hover {
+    transform: scale(1.05); 
+}
+
+.book-title {
+    font-size: 16px;
+    color: #333;
+    padding: 10px;
+    border: 1px solid #ccc; 
+    background-color: #f9f9f9; 
 }
