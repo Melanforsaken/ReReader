@@ -1,0 +1,38 @@
+.reader-content {
+    padding: 20px; /* Add some padding for better readability */
+    max-width: 800px; /* Set a maximum width for the content */
+    margin: 0 auto; /* Center the content */
+    overflow: auto; /* Allow scrolling if content is too large */
+    font-size: 16px; /* Default font size */
+    line-height: 1.6; /* Improve line spacing for readability */
+    background-color: #f9f9f9; /* Light background for contrast */
+    color: #333; /* Text color for contrast */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.navigation {
+    display: flex; /* Use flexbox for navigation layout */
+    justify-content: space-between; /* Space out navigation buttons */
+    margin-top: 20px; /* Space above navigation */
+}
+
+button {
+    padding: 10px 15px; /* Button padding */
+    font-size: 16px; /* Button font size */
+    color: white; /* Button text color */
+    background-color: #007bff; /* Button background color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth background transition */
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+button:disabled {
+    background-color: #cccccc; /* Grey out disabled buttons */
+    cursor: not-allowed; /* Not-allowed cursor for disabled buttons */
+}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Epub from 'epubjs';
+import './BookReader.css';
 
 const BookReader = ({ book }) => {
     const [epub, setEpub] = useState(null);
