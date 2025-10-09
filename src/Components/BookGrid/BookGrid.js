@@ -10,7 +10,7 @@ const BookGrid = ({ books, onBookSelect }) => {
           key={book.id} 
           title={book.title} 
           cover={book.cover} 
-          onSelect={() => onBookSelect(book)} // Pass the book to the onSelect handler
+          onSelect={() => onBookSelect(book)} 
         />
       ))}
     </div>

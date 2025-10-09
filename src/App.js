@@ -28,12 +28,11 @@ const App = () => {
                     coverUrl = URL.createObjectURL(image);
                 }
 
-                // Return the book object with the file included
                 return {
                     id: books.length + index + 1,
                     title: metadata.title || file.name,
                     cover: coverUrl,
-                    file: file // Include the actual file here for BookReader
+                    file: file 
                 };
             } catch (err) {
                 console.error("Error processing EPUB:", err);
@@ -41,7 +40,7 @@ const App = () => {
                     id: books.length + index + 1,
                     title: file.name,
                     cover: "",
-                    file: null // Ensure file is null on error
+                    file: null 
                 };
             }
         });
