@@ -12,7 +12,7 @@ const SearchBar = ({ onFileUpload }) => {
                 <button className="icon-button" title="Settings">
                     <span>⚙️</span>
                 </button>
-                <label htmlFor="file-upload" className="icon-button" title="Add">
+                <label htmlFor="file-upload" className="icon-button file-upload-button" title="Add">
                     <span>➕</span>
                     <input
                         id="file-upload"
