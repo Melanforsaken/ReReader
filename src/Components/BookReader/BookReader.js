@@ -16,13 +16,13 @@ const BookReader = ({ book }) => {
             newEpub.open().then(() => {
                 newEpub.getDocuments().then((docs) => {
                     setTotalPages(docs.length);
-                    loadPage(0); 
+                    loadPage(0); // Load the first page
                 });
             }).catch(err => {
                 console.error("Failed to open EPUB:", err);
             });
 
-            
+            // Clean up the blob URL to avoid memory leaks
             return () => {
                 URL.revokeObjectURL(blobUrl);
             };
