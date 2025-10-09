@@ -23,18 +23,28 @@ input[type="text"] {
     font-size: 24px; 
     margin-left: 10px; 
     outline: none; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
+    display: flex; /* Ensure it behaves like a block element */
+    align-items: center; /* Center the icon vertically */
+    justify-content: center; /* Center the icon horizontally */
 }
 
+/* Standard hover effect for all icon buttons */
 .icon-button:hover {
-    opacity: 0.7; 
+    background-color: #007bff; /* Blue background on hover */
+    color: white; /* Change text color to white for better contrast */
+    border-radius: 5px; /* Optional: add some border-radius for a smoother look */
 }
 
-
+/* Ensure the file upload label behaves like a button */
 .file-upload-button {
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
+    display: flex; /* Maintain flex properties */
+    align-items: center; /* Center the icon vertically */
+    justify-content: center; /* Center the icon horizontally */
+}
+
+/* Apply the same hover effect for the file upload button */
+.file-upload-button:hover {
+    background-color: #007bff; /* Blue background on hover */
+    color: white; /* Change text color to white for visibility */
+    border-radius: 5px; /* Optional: add some border-radius */
 }
