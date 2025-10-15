@@ -9,6 +9,7 @@ const BookReader = ({ book }) => {
     const [totalPages, setTotalPages] = useState(0);
 
     useEffect(() => {
+        console.log("test")
         if (book && book.file) { 
             const blobUrl = URL.createObjectURL(book.file); 
             const newEpub = Epub(blobUrl);
@@ -17,6 +18,7 @@ const BookReader = ({ book }) => {
             newEpub.open().then(() => {
                 newEpub.getDocuments().then((docs) => {
                     setTotalPages(docs.length);
+                    console.log("test")
                     loadPage(0); // Load the first page
                 });
             }).catch(err => {
@@ -33,6 +35,7 @@ const BookReader = ({ book }) => {
     const loadPage = (index) => {
         if (epub) {
             epub.goto(index).then((c) => {
+                console.log(c)
                 setContent(c);
                 setCurrentPage(index);
             }).catch(err => {
